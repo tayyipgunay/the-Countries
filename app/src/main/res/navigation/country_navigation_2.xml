@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/country_navigation_2"
+    app:startDestination="@id/countryFragment2">
+    <fragment
+        android:id="@+id/countryFragment2"
+        android:name="com.tayyipgunay.thecountries2.View.CountryFragment"
+        android:label="CountryFragment" >
+        <action
+            android:id="@+id/action_countryFragment2_to_counrtyDetailsFragment3"
+            app:destination="@id/counrtyDetailsFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/counrtyDetailsFragment3"
+        android:name="com.tayyipgunay.thecountries2.View.CounrtyDetailsFragment"
+        android:label="CounrtyDetailsFragment" >
+        <action
+            android:id="@+id/action_counrtyDetailsFragment3_to_countryFragment2"
+            app:destination="@id/countryFragment2" />
+        <argument
+            android:name="uuid"
+            app:argType="integer" />
+    </fragment>
+</navigation>
