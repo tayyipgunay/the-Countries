@@ -18,63 +18,57 @@ import com.tayyipgunay.thecountries2.databinding.FragmentCounrtyDetailsBinding
 
 class CounrtyDetailsFragment : Fragment() {
 
-    // Binding nesnesi
+    // Binding nesnesi, UI bileşenlerine erişim sağlar
     private var _binding: FragmentCounrtyDetailsBinding? = null
     private val binding get() = _binding!!
-    //   private lateinit var binding:FragmentCounrtyDetailsBinding
-    private lateinit var countryDetailsViewModel: CountryDetailsViewModel
-    //private var uuid = 0
+
+    private lateinit var countryDetailsViewModel: CountryDetailsViewModel // ViewModel nesnesi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // ViewBinding kullanarak layout'u inflate ediyoruz
-        /*_binding = FragmentCounrtyDetailsBinding.inflate(inflater, container, false)
-        return binding.root*/
-
-      //  _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_counrty_details, container, false)
+    ): View {
+        // Data Binding kullanarak layout'u inflate ediyoruz
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_counrty_details, container, false)
         return binding.root
-        /*binding=DataBindingUtil.inflate(inflater, R.layout.fragment_country,container,false)
-        return binding.root*/
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // ViewModel nesnesini oluşturuyoruz
         countryDetailsViewModel = ViewModelProvider(this).get(CountryDetailsViewModel::class.java)
 
+        // Fragment'e gelen argümanları alıyoruz
         arguments?.let {
+            val uuid = CounrtyDetailsFragmentArgs.fromBundle(it).uuid // Navigation Component ile gelen UUID değeri
+            println("from adapter uuid: $uuid")
+            println("from room uuid: $uuid")
 
-          var   uuid = CounrtyDetailsFragmentArgs.fromBundle(it).uuid//frameworkte tanımladığımız değişken
-            println("from  adapter uuuid" + uuid)
-
-
-            println("from room uuuid" + uuid)
-
+            // ViewModel üzerinden Room veritabanından veriyi çekiyoruz
             countryDetailsViewModel.getDataFromRoom(uuid)
         }
 
-
-        observeLiveData()
+        observeLiveData() // LiveData gözlemleyici başlatılır
     }
 
     private fun observeLiveData() {
         println("observeLiveDATA1")
 
         countryDetailsViewModel.countryLiveData.observe(viewLifecycleOwner, Observer { Country ->
-            println("observeLiveDATA2") // Veri geldiğinde bu satır çalışır
+            println("observeLiveDATA2") // Veri geldiğinde çalışır
 
             Country?.let {
                 println("observeLiveDATA3")
                 binding.selectedCountry = Country // Data Binding ile veriyi bağla
-
             }
         })
     }
+
 
 
 

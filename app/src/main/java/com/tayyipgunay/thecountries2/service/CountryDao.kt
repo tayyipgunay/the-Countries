@@ -99,28 +99,30 @@ interface CountryDao {
 @Dao
 interface CountryDao {
 
-    //Data Access Object
+    // Data Access Object (DAO), veritabanı işlemlerini yöneten arayüz
 
     @Insert
     suspend fun insertAll(vararg countries: Country): List<Long>
-
-    //Insert -> INSERT INTO
-    // suspend -> coroutine, pause & resume
-    // vararg -> multiple country objects
-    // List<Long> -> primary keys
-
+    // insertAll: Veritabanına birden fazla ülke eklemek için kullanılır
+    // suspend: Coroutine içinde çalıştırılabilir (asenkron işlem sağlar)
+    // vararg: Birden fazla Country nesnesi alabilir
+    // List<Long>: Eklenen kayıtların birincil anahtarlarını döndürür
 
     @Query("SELECT * FROM Country")
     suspend fun getAllCountries(): List<Country>
+    // getAllCountries: Tüm ülke verilerini getirir
+    // SQL sorgusu: SELECT * FROM Country
 
     @Query("SELECT * FROM Country WHERE uuid = :countryId")
     suspend fun getCountry(countryId: Int): Country
-
+    // getCountry: Belirli bir ülkeyi ID'sine göre getirir
+    // :countryId -> Parametre olarak gelen değeri SQL sorgusunda kullanır
 
     @Query("DELETE FROM Country")
     suspend fun deleteAllCountries()
-
+    // deleteAllCountries: Tüm ülkeleri veritabanından siler
 }
+
 
 
 

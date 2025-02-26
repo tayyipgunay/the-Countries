@@ -18,61 +18,54 @@ import com.tayyipgunay.thecountries2.databinding.FragmentCountryBinding
 
 class CountryFragment : Fragment() {
 
-     //Binding nesnesi
+    // Binding nesnesi, fragmentin UI bileşenlerine erişim sağlar
     private var _binding: FragmentCountryBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var viewModel: CountryViewModel
+    private val binding get() = _binding!! // Güvenli erişim için non-null getter
 
-  private val countryAdapter = CountryAdapter(arrayListOf())
+    private lateinit var viewModel: CountryViewModel // ViewModel nesnesi
+    private val countryAdapter = CountryAdapter(arrayListOf()) // RecyclerView için adapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // ViewBinding kullanarak layout'u inflate ediyoruz
         _binding = FragmentCountryBinding.inflate(inflater, container, false)
         return binding.root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //   viewModel = ViewModelProviders.of(this).get(CountryViewModel::class.java)
-       // viewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
+
+        // ViewModel nesnesini bağlıyoruz (Fragment'in bağlı olduğu Activity üzerinden alınıyor)
         viewModel = ViewModelProvider(requireActivity()).get(CountryViewModel::class.java)
 
+        viewModel.RefreshData() // Verileri güncelle
 
-
-        viewModel.RefreshData()
-
-
+        // RecyclerView için layout ve adapter ayarlanıyor
         binding.countryList.layoutManager = LinearLayoutManager(requireContext())
         binding.countryList.adapter = countryAdapter
 
+        // SwipeRefreshLayout kullanıcının listeyi yenilemesini sağlar
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.countryList.visibility = View.GONE
             binding.countryError.visibility = View.GONE
             binding.progressbar.visibility = View.VISIBLE
 
-            viewModel.RefreshData()
-            binding.swipeRefreshLayout.isRefreshing = false
-
-
+            viewModel.RefreshData() // Verileri yenile
+            binding.swipeRefreshLayout.isRefreshing = false // Yenileme tamamlandığında kapat
         }
 
-
-        observe()
-
+        observe() // LiveData gözlemleyici başlatılır
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         // Bellek sızıntılarını önlemek için binding'i null yapıyoruz
         _binding = null
-
-
     }
+
+
 /*
 ArrayList, verileri saklama, ekleme ve erişim işlevlerini yerine getiren bir koleksiyon sınıfıdır,
  ancak reaktif değildir; yani, listeye yapılan değişiklikleri otomatik olarak algılayıp UI'ye yansıtamaz.
