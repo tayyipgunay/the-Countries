@@ -47,4 +47,5 @@ Projeye katkıda bulunmak için bir pull request oluşturabilir veya issue açab
 ## Lisans
 Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasına bakınız.
 
-![WhatsApp Görsel 2025-02-26 saat 16 32 07_9d5f8b49](https://github.com/user-attachments/assets/128c407b-9074-4440-b9fd-2cde38660a80)
+![WhatsApp Görsel 2025-02-26 saat 16 32 07_542cb794](https://github.com/user-attachments/assets/6651f46c-8ee0-4b1d-b37b-4ccaaa10a4e5)
+  ![WhatsApp Görsel 2025-02-26 saat 16 32 07_9d5f8b49](https://github.com/user-attachments/assets/128c407b-9074-4440-b9fd-2cde38660a80)
